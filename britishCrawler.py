@@ -20,8 +20,8 @@ def british_crawler(url, verify_xpath, descendant_xpaths=None, ancestor_xpaths=N
         visited_links.append(current_url)
         res = requests.get(current_url)
         doc = lxml.html.fromstring(res.content)
-        to_update = [item for item in result if item[1] == current_url]
         if verify_xpath:
+            to_update = [item for item in result if item[1] == current_url]
             after_filter = doc.xpath(verify_xpath)
             if not after_filter:
                 if to_update:
@@ -29,9 +29,9 @@ def british_crawler(url, verify_xpath, descendant_xpaths=None, ancestor_xpaths=N
                         result.remove(item)
                 time.sleep(3)
                 continue
-        if to_update:
-            for item in to_update:
-                item.append(1)
+            if to_update:
+                for item in to_update:
+                    item.append(1)
 
         if descendant_xpaths is not None:
             for link in doc.xpath(descendant_xpaths):
